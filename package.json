@@ -23,9 +23,10 @@
     },
     "views": {
       "terminalnotebook": [
+        
         {
-          "id": "terminalnotebook.sidebar",
-          "name": "TerminalNotebook"
+          "id": "terminalnotebook.view",
+          "name": "Terminal Notebook"
         }
       ]
     },
