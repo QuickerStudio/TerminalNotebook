@@ -1,8 +1,8 @@
 {
   "name": "terminalnotebook",
   "displayName": "TerminalNotebook",
-  "description": "VS Code 扩展，React 侧边栏窗口，支持 TerminalNotebook 标签管理，模块化小组件，ts/tsx/css 文件结构。",
-  "version": "0.0.1",
+  "description": "管理和快速执行终端命令的终端命令笔记本。",
+  "version": "1.0.0",
   "icon": "icons-terminal.png",
   "repository": {
     "type": "git",
