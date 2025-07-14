@@ -1,3 +1,20 @@
+// 收藏夹最多显示数量
+const MAX_FAVORITES = 5;
+
+function getFavorites(context: vscode.ExtensionContext): { label: string; id: string }[] {
+  return context.globalState.get<{ label: string; id: string }[]>('terminalnotebook.favorites') || [];
+}
+
+function setFavorites(context: vscode.ExtensionContext, favorites: { label: string; id: string }[], dataProvider?: DataProvider) {
+  context.globalState.update('terminalnotebook.favorites', favorites);
+  // setContext 需等待 globalState 更新后再调用，确保菜单刷新
+  setTimeout(() => {
+    vscode.commands.executeCommand('setContext', 'terminalnotebook.hasFavorites', favorites.length > 0);
+    if (dataProvider) {
+      dataProvider.refresh();
+    }
+  }, 10);
+}
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
@@ -5,6 +22,66 @@ import { DataProvider } from './dataProvider';
 import { TerminalManager } from './Terminal';
 
 export function activate(context: vscode.ExtensionContext) {
+  // 初始化 setContext，确保菜单首次显示正确
+  vscode.commands.executeCommand('setContext', 'terminalnotebook.hasFavorites', getFavorites(context).length > 0);
+  // 添加到收藏夹命令
+  context.subscriptions.push(vscode.commands.registerCommand('terminalnotebook.addFavorite', (item: vscode.TreeItem) => {
+    const favorites = getFavorites(context);
+    if (favorites.length >= MAX_FAVORITES) {
+      vscode.window.showWarningMessage(`收藏夹最多只能有${MAX_FAVORITES}个标签。`);
+      return;
+    }
+    // 避免重复收藏
+    if (favorites.some(f => f.id === item.id)) {
+      vscode.window.showInformationMessage('该标签已在收藏夹中。');
+      return;
+    }
+    favorites.push({ label: item.label?.toString() || '', id: item.id || '' });
+    setFavorites(context, favorites, dataProvider);
+    vscode.window.showInformationMessage('已添加到收藏夹');
+  }));
+
+  // 收藏夹按钮命令（弹出快速选择）
+  context.subscriptions.push(vscode.commands.registerCommand('terminalnotebook.favoriteTabs', async () => {
+    const favorites = getFavorites(context);
+    if (favorites.length === 0) {
+      vscode.window.showInformationMessage('收藏夹为空');
+      return;
+    }
+    const pick = await vscode.window.showQuickPick(
+      favorites.map(f => ({
+        label: f.label,
+        id: f.id,
+        detail: f.label, // 让 detail 也显示命令行
+        alwaysShow: true,
+        // VS Code QuickPick 不支持自定义图标，但可以用 emoji 或特殊字符
+        description: '⭐',
+        tooltip: f.label // 虽然 tooltip 不生效，但保留字段
+      })),
+      { placeHolder: '选择要执行的收藏命令' }
+    );
+    if (pick) {
+      TerminalManager.openAndRun(pick.id, pick.label);
+    }
+  }));
+
+  // 管理收藏夹命令（删除）
+  context.subscriptions.push(vscode.commands.registerCommand('terminalnotebook.manageFavorites', async () => {
+    let favorites = getFavorites(context);
+    if (favorites.length === 0) {
+      vscode.window.showInformationMessage('收藏夹为空');
+      return;
+    }
+    const pick = await vscode.window.showQuickPick(
+      favorites.map(f => ({ label: `删除：${f.label}`, id: f.id })),
+      { placeHolder: '选择要从收藏夹移除的标签' }
+    );
+    if (pick) {
+      favorites = favorites.filter(f => f.id !== pick.id);
+      setFavorites(context, favorites, dataProvider);
+      vscode.window.showInformationMessage('已从收藏夹移除');
+    }
+  }));
   console.log('TerminalNotebook extension is now active!');
 
   // 创建数据提供程序实例

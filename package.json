@@ -61,6 +61,21 @@
         "command": "terminalnotebook.importTabs",
         "title": "导入标签",
         "icon": "$(cloud-download)"
+      },
+      {
+        "command": "terminalnotebook.addFavorite",
+        "title": "添加到收藏夹",
+        "icon": "$(star-add)"
+      },
+      {
+        "command": "terminalnotebook.favoriteTabs",
+        "title": "收藏夹",
+        "icon": "$(star)"
+      },
+      {
+        "command": "terminalnotebook.manageFavorites",
+        "title": "管理收藏夹",
+        "icon": "$(trash)"
       }
     ],
     "menus": {
@@ -74,9 +89,25 @@
           "command": "terminalnotebook.deleteTab",
           "when": "view == terminalnotebook.view && viewItem =~ /deletableTab/",
           "group": "inline@2"
+        },
+        {
+          "command": "terminalnotebook.addFavorite",
+          "when": "view == terminalnotebook.view",
+          "group": "inline@3"
         }
       ],
       "view/title": [
+      {
+        "command": "terminalnotebook.favoriteTabs",
+        "when": "view == terminalnotebook.view && terminalnotebook.hasFavorites",
+        "group": "navigation@0",
+        "icon": "$(star)"
+      },
+        {
+          "command": "terminalnotebook.manageFavorites",
+          "when": "view == terminalnotebook.view && terminalnotebook.hasFavorites",
+          "group": "navigation@0"
+        },
         {
           "command": "terminalnotebook.addTag",
           "when": "view == terminalnotebook.view",
