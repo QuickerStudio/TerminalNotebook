@@ -2,6 +2,8 @@
 
 # TerminalNotebook 🚀
 
+![TerminalNotebook Demo](https://raw.githubusercontent.com/QuickerStudio/TerminalNotebook/main/assets/demo-screenshot.png)
+
 **VS Code Terminal Command Notebook**  
 Manage and quickly execute terminal commands to boost your development efficiency.
 
@@ -10,8 +12,6 @@ Manage and quickly execute terminal commands to boost your development efficienc
 [![GitHub Stars](https://img.shields.io/github/stars/QuickerStudio/TerminalNotebook?style=social)](https://github.com/QuickerStudio/TerminalNotebook/stargazers)
 
 > Manage terminal commands like Jupyter Notebook in VS Code, mixing commands, outputs, and documentation.
-
-![TerminalNotebook Demo](https://raw.githubusercontent.com/QuickerStudio/TerminalNotebook/main/assets/demo-screenshot.png)
 
 ---
 
