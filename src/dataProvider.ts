@@ -57,7 +57,12 @@ export class DataProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
         item.tooltip = '右键重命名标签';
         // 设置自定义图标
         item.iconPath = this.context.asAbsolutePath('src/icons-terminal.png');
-        // 不再设置 command，禁用单击/双击重命名
+        // 设置 command，点击标签自动执行命令
+        item.command = {
+          command: 'terminalnotebook.openTerminal',
+          title: '在终端执行标签命令',
+          arguments: [item]
+        };
         return item;
       })
     );

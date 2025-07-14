@@ -3,6 +3,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import { DataProvider } from './dataProvider';
+import { TerminalManager } from './Terminal';
 
 export function activate(context: vscode.ExtensionContext) {
   console.log('TerminalNotebook extension is now active!');
@@ -67,10 +68,19 @@ export function activate(context: vscode.ExtensionContext) {
   });
   context.subscriptions.push(refreshCommand);
 
-  // 注册打开终端命令
-  const openTerminalCommand = vscode.commands.registerCommand('terminalnotebook.openTerminal', (terminalId: string) => {
-    const terminal = vscode.window.createTerminal(`TerminalNotebook-${terminalId}`);
-    terminal.show();
+
+  // 注册点击标签后自动执行命令
+  const openTerminalCommand = vscode.commands.registerCommand('terminalnotebook.openTerminal', (item: vscode.TreeItem) => {
+    // item.id: 标签唯一 id，item.label: 标签标题（命令行）
+    let cmd = '';
+    if (item && item.label) {
+      cmd = item.label.toString();
+    }
+    if (item && item.id && cmd) {
+      TerminalManager.openAndRun(item.id.toString(), cmd);
+    } else {
+      vscode.window.showWarningMessage('标签信息不完整，无法执行命令');
+    }
   });
   context.subscriptions.push(openTerminalCommand);
 
