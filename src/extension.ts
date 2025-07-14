@@ -1,8 +1,31 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+
 import { DataProvider } from './dataProvider';
 import { TerminalManager } from './Terminal';
+
+// 收藏夹按钮动态注册用
+const favoriteDisposables: vscode.Disposable[] = [];
+export function updateFavoriteCommands(context: vscode.ExtensionContext) {
+  // 先清理旧的 disposable
+  while (favoriteDisposables.length) {
+    const d = favoriteDisposables.pop();
+    if (d) { d.dispose(); }
+  }
+  const favorites = getFavorites(context);
+  for (let i = 0; i < 5; i++) {
+    const fav = favorites[i];
+    const visible = !!fav;
+    vscode.commands.executeCommand('setContext', `terminalnotebook.favorite${i}Visible`, visible);
+    if (visible) {
+      const cmd = `terminalnotebook.favorite${i}`;
+      favoriteDisposables.push(vscode.commands.registerCommand(cmd, () => {
+        TerminalManager.openAndRun(fav.id, fav.label);
+      }));
+    }
+  }
+}
 
 // 收藏夹最多显示数量
 const MAX_FAVORITES = 5;
@@ -16,6 +39,7 @@ function setFavorites(context: vscode.ExtensionContext, favorites: { label: stri
   // setContext 需等待 globalState 更新后再调用，确保菜单刷新
   setTimeout(() => {
     vscode.commands.executeCommand('setContext', 'terminalnotebook.hasFavorites', favorites.length > 0);
+    updateFavoriteCommands(context);
     if (dataProvider) {
       dataProvider.refresh();
     }
@@ -25,6 +49,7 @@ function setFavorites(context: vscode.ExtensionContext, favorites: { label: stri
 export function activate(context: vscode.ExtensionContext) {
   // 初始化 setContext，确保菜单首次显示正确
   vscode.commands.executeCommand('setContext', 'terminalnotebook.hasFavorites', getFavorites(context).length > 0);
+  updateFavoriteCommands(context);
   // 创建数据提供程序实例
   const dataProvider = new DataProvider(context);
   // 创建树视图
@@ -72,7 +97,7 @@ export function activate(context: vscode.ExtensionContext) {
       TerminalManager.openAndRun(pick.id, pick.label);
     }
     setFavorites(context, favorites, dataProvider);
-    updateFavoriteCommands();
+    updateFavoriteCommands(context);
     vscode.window.showInformationMessage('已添加到收藏夹');
   }));
 
@@ -97,32 +122,12 @@ export function activate(context: vscode.ExtensionContext) {
     if (selected) {
       const newFavorites = favorites.filter(f => f.id !== selected.favorite.id);
       setFavorites(context, newFavorites, dataProvider);
-      updateFavoriteCommands();
+      updateFavoriteCommands(context);
       vscode.window.showInformationMessage(`已删除收藏: ${selected.label}`);
     }
   }));
 
-  // 动态注册/更新收藏夹按钮命令
-  const favoriteDisposables: vscode.Disposable[] = [];
-  function updateFavoriteCommands() {
-    // 先清理旧的 disposable
-    while (favoriteDisposables.length) {
-      const d = favoriteDisposables.pop();
-      if (d) d.dispose();
-    }
-    const favorites = getFavorites(context);
-    for (let i = 0; i < 5; i++) {
-      const fav = favorites[i];
-      const visible = !!fav;
-      vscode.commands.executeCommand('setContext', `terminalnotebook.favorite${i}Visible`, visible);
-      if (visible) {
-        const cmd = `terminalnotebook.favorite${i}`;
-        favoriteDisposables.push(vscode.commands.registerCommand(cmd, () => {
-          TerminalManager.openAndRun(fav.id, fav.label);
-        }));
-      }
-    }
-  }
+  // ...existing code...
 
   // 树视图工具栏
 
@@ -144,7 +149,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
   }));
   // 激活时初始化收藏按钮
-  updateFavoriteCommands();
+  updateFavoriteCommands(context);
 
   // 注册导入标签命令
   context.subscriptions.push(vscode.commands.registerCommand('terminalnotebook.importTabs', async () => {
