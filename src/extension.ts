@@ -19,8 +19,21 @@ export function activate(context: vscode.ExtensionContext) {
   });
 
   // 添加标签按钮到工具栏
-  context.subscriptions.push(vscode.commands.registerCommand('terminalnotebook.addTag', () => {
-    vscode.window.showInformationMessage('标签功能已触发');
+  context.subscriptions.push(vscode.commands.registerCommand('terminalnotebook.addTag', async () => {
+    const newLabel = await vscode.window.showInputBox({
+      prompt: '请输入新标签名',
+      validateInput: (input) => input.trim() === '' ? '标签不能为空' : undefined
+    });
+    if (newLabel) {
+      // 获取当前标签数据
+      const tabs = dataProvider.getTabs();
+      // 生成唯一 id
+      const id = Date.now().toString();
+      // 添加新标签
+      tabs.push({ id, label: newLabel });
+      dataProvider.refresh();
+      vscode.window.showInformationMessage(`已添加标签：${newLabel}`);
+    }
   }));
 
   // 在视图标题栏添加按钮
