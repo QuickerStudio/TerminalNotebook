@@ -42,10 +42,7 @@
       {
         "command": "terminalnotebook.addTag",
         "title": "添加标签",
-        "icon": {
-          "light": "$(plus)",
-          "dark": "$(plus)"
-        }
+        "icon": "$(plus)"
       }
     ],
     "menus": {
