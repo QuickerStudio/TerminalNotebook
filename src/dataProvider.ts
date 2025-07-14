@@ -54,6 +54,12 @@ export class DataProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
     return this.tabs;
   }
 
+  // 复制命令到剪贴板
+  public static copyToClipboard(text: string) {
+    vscode.env.clipboard.writeText(text);
+    vscode.window.showInformationMessage(`命令已复制: ${text}`);
+  }
+
   // 添加新标签页
   public addTab(label: string): void {
     const newTab = {
@@ -85,8 +91,8 @@ export class DataProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
       this.tabs.map(tab => {
         const item = new vscode.TreeItem(tab.label, vscode.TreeItemCollapsibleState.None);
         item.id = tab.id;
-        // 使标签可编辑和可删除
-        item.contextValue = 'editableTab deletableTab';
+        // 使标签可编辑和可删除和可复制
+        item.contextValue = 'editableTab deletableTab copyableTab';
         item.description = '';
         item.tooltip = '右键重命名标签';
         // 设置自定义图标
@@ -97,6 +103,9 @@ export class DataProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
           title: '在终端执行标签命令',
           arguments: [item]
         };
+        // 添加复制按钮（VS Code 1.56+ 支持 TreeItem.buttons）
+        // 兼容性处理：用 TreeItem 的 contextValue 配合 package.json 的菜单项实现右键复制
+        // VS Code 目前不支持 TreeItem.buttons，复制功能通过右键菜单实现
         return item;
       })
     );

@@ -38,6 +38,11 @@
     },
     "commands": [
       {
+        "command": "terminalnotebook.copyTabLabel",
+        "title": "复制命令",
+        "icon": "$(copy)"
+      },
+      {
         "command": "terminalnotebook.renameTab",
         "title": "重命名标签",
         "icon": "$(edit)"
@@ -107,6 +112,11 @@
     "menus": {
       "view/item/context": [
         {
+          "command": "terminalnotebook.copyTabLabel",
+          "when": "view == terminalnotebook.view && viewItem =~ /copyableTab/",
+          "group": "inline@0"
+        },
+        {
           "command": "terminalnotebook.renameTab",
           "when": "view == terminalnotebook.view && viewItem =~ /editableTab/",
           "group": "inline@1"
@@ -120,6 +130,11 @@
           "command": "terminalnotebook.deleteTab",
           "when": "view == terminalnotebook.view && viewItem =~ /deletableTab/",
           "group": "inline@3"
+        },
+        {
+          "command": "terminalnotebook.copyTabLabel",
+          "when": "view == terminalnotebook.view && viewItem =~ /copyableTab/",
+          "group": "inline@4"
         }
       ],
       "view/title": [

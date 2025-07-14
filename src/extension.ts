@@ -47,6 +47,21 @@ function setFavorites(context: vscode.ExtensionContext, favorites: { label: stri
 }
 
 export function activate(context: vscode.ExtensionContext) {
+  // 注册复制命令
+  context.subscriptions.push(vscode.commands.registerCommand('terminalnotebook.copyTabLabel', (labelOrItem: string | vscode.TreeItem) => {
+    let text = '';
+    if (typeof labelOrItem === 'string') {
+      text = labelOrItem;
+    } else if (labelOrItem && labelOrItem.label) {
+      text = labelOrItem.label.toString();
+    }
+    if (text) {
+      vscode.env.clipboard.writeText(text);
+      vscode.window.showInformationMessage(`命令已复制: ${text}`);
+    } else {
+      vscode.window.showWarningMessage('未找到可复制的命令');
+    }
+  }));
   // 初始化 setContext，确保菜单首次显示正确
   vscode.commands.executeCommand('setContext', 'terminalnotebook.hasFavorites', getFavorites(context).length > 0);
   updateFavoriteCommands(context);
