@@ -95,11 +95,6 @@ export function activate(context: vscode.ExtensionContext) {
   });
   context.subscriptions.push(openTerminalCommand);
 
-  // 保留 helloWorld 命令
-  const disposable = vscode.commands.registerCommand('terminalnotebook.helloWorld', () => {
-    vscode.window.showInformationMessage('Hello World from TerminalNotebook!');
-  });
-  context.subscriptions.push(disposable);
 }
 
 

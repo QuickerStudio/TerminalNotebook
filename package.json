@@ -32,10 +32,6 @@
     },
     "commands": [
       {
-        "command": "terminalnotebook.helloWorld",
-        "title": "Hello World"
-      },
-      {
         "command": "terminalnotebook.renameTab",
         "title": "重命名标签",
         "icon": "$(edit)"
