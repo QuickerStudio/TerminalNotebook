@@ -31,7 +31,8 @@
         
         {
           "id": "terminalnotebook.view",
-          "name": "Terminal Notebook"
+          "name": "Terminal Notebook",
+          "icon": "icons-terminal.png"
         }
       ]
     },
@@ -50,6 +51,16 @@
         "command": "terminalnotebook.addTag",
         "title": "添加标签",
         "icon": "$(plus)"
+      },
+      {
+        "command": "terminalnotebook.exportTabs",
+        "title": "分享",
+        "icon": "$(cloud-upload)"
+      },
+      {
+        "command": "terminalnotebook.importTabs",
+        "title": "导入标签",
+        "icon": "$(cloud-download)"
       }
     ],
     "menus": {
@@ -70,6 +81,16 @@
           "command": "terminalnotebook.addTag",
           "when": "view == terminalnotebook.view",
           "group": "navigation@1"
+        },
+        {
+          "command": "terminalnotebook.exportTabs",
+          "when": "view == terminalnotebook.view",
+          "group": "navigation@2"
+        },
+        {
+          "command": "terminalnotebook.importTabs",
+          "when": "view == terminalnotebook.view",
+          "group": "navigation@3"
         }
       ]
     }

@@ -1,4 +1,3 @@
-// ...existing code...
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
@@ -18,6 +17,51 @@ export function activate(context: vscode.ExtensionContext) {
   const treeView = vscode.window.createTreeView('terminalnotebook.view', {
     treeDataProvider: dataProvider
   });
+
+  // 注册导出标签命令
+  context.subscriptions.push(vscode.commands.registerCommand('terminalnotebook.exportTabs', async () => {
+    const tabs = dataProvider.getTabs();
+    const exportData = {
+      type: 'TerminalNotebookTabs',
+      version: 1,
+      tabs: tabs.map(tab => ({ label: tab.label, id: tab.id }))
+    };
+    const uri = await vscode.window.showSaveDialog({
+      filters: { 'TerminalNotebook Tabs': ['json'] },
+      saveLabel: '导出标签列表为 JSON 文件'
+    });
+    if (uri) {
+      await vscode.workspace.fs.writeFile(uri, Buffer.from(JSON.stringify(exportData, null, 2), 'utf8'));
+      vscode.window.showInformationMessage('标签命令已导出！');
+    }
+  }));
+
+  // 注册导入标签命令
+  context.subscriptions.push(vscode.commands.registerCommand('terminalnotebook.importTabs', async () => {
+    const uris = await vscode.window.showOpenDialog({
+      canSelectMany: false,
+      filters: { 'TerminalNotebook Tabs': ['json'] },
+      openLabel: '导入标签列表 JSON 文件'
+    });
+    if (uris && uris.length > 0) {
+      try {
+        const fileData = await vscode.workspace.fs.readFile(uris[0]);
+        const json = JSON.parse(Buffer.from(fileData).toString('utf8'));
+        if (json.type === 'TerminalNotebookTabs' && Array.isArray(json.tabs)) {
+          // 合并导入的标签，避免 id 冲突
+          const existing = dataProvider.getTabs();
+          const newTabs = json.tabs.filter((t: { label: string }) => !existing.some((e: { label: string }) => e.label === t.label));
+          existing.push(...newTabs.map((t: { label: string }) => ({ label: t.label, id: `terminal-${Date.now()}-${Math.random().toString(36).slice(2,8)}` })));
+          dataProvider.refresh();
+          vscode.window.showInformationMessage('标签命令已导入！');
+        } else {
+          vscode.window.showErrorMessage('文件格式不正确，无法导入。');
+        }
+      } catch (e) {
+        vscode.window.showErrorMessage('导入失败：' + (e as Error).message);
+      }
+    }
+  }));
 
   // 添加标签按钮到工具栏
   context.subscriptions.push(vscode.commands.registerCommand('terminalnotebook.addTag', async () => {
@@ -40,6 +84,7 @@ export function activate(context: vscode.ExtensionContext) {
   // 在视图标题栏添加按钮
   treeView.title = 'TerminalNotebook';
   treeView.description = '标签管理';
+  // 通过 package.json 配置按钮，命令已注册
 
   // 注册重命名命令
   const renameTabCommand = vscode.commands.registerCommand('terminalnotebook.renameTab', async (item: vscode.TreeItem) => {
