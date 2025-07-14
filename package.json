@@ -40,6 +40,11 @@
         "title": "重命名标签"
       },
       {
+        "command": "terminalnotebook.deleteTab",
+        "title": "删除标签",
+        "icon": "$(close)"
+      },
+      {
         "command": "terminalnotebook.addTag",
         "title": "添加标签",
         "icon": "$(plus)"
@@ -49,7 +54,12 @@
       "view/item/context": [
         {
           "command": "terminalnotebook.renameTab",
-          "when": "view == terminalnotebook.view && viewItem == editableTab",
+          "when": "view == terminalnotebook.view && viewItem =~ /editableTab/",
+          "group": "inline"
+        },
+        {
+          "command": "terminalnotebook.deleteTab",
+          "when": "view == terminalnotebook.view && viewItem =~ /deletableTab/",
           "group": "inline"
         }
       ],

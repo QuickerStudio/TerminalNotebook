@@ -61,13 +61,24 @@ export function activate(context: vscode.ExtensionContext) {
   });
   context.subscriptions.push(renameTabCommand);
 
+  // 注册删除标签命令
+  const deleteTabCommand = vscode.commands.registerCommand('terminalnotebook.deleteTab', (item: vscode.TreeItem) => {
+    const tabs = dataProvider.getTabs();
+    const idx = tabs.findIndex((t: { id: string }) => t.id === item.id);
+    if (idx !== -1) {
+      tabs.splice(idx, 1);
+      dataProvider.refresh();
+      vscode.window.showInformationMessage('标签已删除');
+    }
+  });
+  context.subscriptions.push(deleteTabCommand);
+
   // 注册数据刷新命令
   const refreshCommand = vscode.commands.registerCommand('terminalnotebook.refreshView', () => {
     vscode.window.showInformationMessage('刷新视图数据...');
     // 实际刷新逻辑将在 Webview 提供程序中处理
   });
   context.subscriptions.push(refreshCommand);
-
 
   // 注册点击标签后自动执行命令
   const openTerminalCommand = vscode.commands.registerCommand('terminalnotebook.openTerminal', (item: vscode.TreeItem) => {

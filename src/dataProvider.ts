@@ -66,8 +66,8 @@ export class DataProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
       this.tabs.map(tab => {
         const item = new vscode.TreeItem(tab.label, vscode.TreeItemCollapsibleState.None);
         item.id = tab.id;
-        // 使标签可编辑
-        item.contextValue = 'editableTab';
+        // 使标签可编辑和可删除
+        item.contextValue = 'editableTab deletableTab';
         item.description = '';
         item.tooltip = '右键重命名标签';
         // 设置自定义图标
