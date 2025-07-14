@@ -97,6 +97,12 @@
         "title": "管理收藏夹",
         "icon": "$(trash)"
       }
+      ,
+      {
+        "command": "terminalnotebook.removeFavorite",
+        "title": "移除收藏夹",
+        "icon": "$(star-delete)"
+      }
     ],
     "menus": {
       "view/item/context": [
