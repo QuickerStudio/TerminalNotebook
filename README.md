@@ -1,71 +1,84 @@
-# terminalnotebook README
 
-This is the README for your extension "terminalnotebook". After writing up a brief description, we recommend including the following sections.
+# TerminalNotebook 🚀
 
-## Features
+TerminalNotebook is a Visual Studio Code extension that provides customizable terminal command shortcut buttons, allowing you to quickly execute frequently used terminal commands with one click, improving your development and operations efficiency.✨
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+<!-- ![TerminalNotebook Banner](src/icons-terminal.png) -->
 
-For example if there is an image subfolder under your extension project workspace:
+## Features 🛠️
 
-\!\[feature X\]\(images/feature-x.png\)
+- Organize and save terminal sessions as notebooks inside VS Code 📒
+- Mix commands, outputs, and Markdown notes in one place 📝
+- Easily review and reuse command history ⏪
+- Manage multiple terminal sessions 🖥️
+- One-click export/share of terminal notebooks 📤
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+## Installation 🧩
 
-## Requirements
+1. Search for `TerminalNotebook` in the VS Code Extension Marketplace and install 🛒
+2. Or run in the command palette:
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+   ```sh
+   ext install <your-publisher>.terminalnotebook
+   ```
 
-## Extension Settings
+## Quick Start ⚡
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+1. Use the custom terminal command shortcut buttons provided by TerminalNotebook in the sidebar or editor to execute preset or user-defined terminal commands with one click 🎯
+2. You can configure your frequently used commands in settings for quick access ⚙️
+3. Supports command grouping and management 🗂️
 
-For example:
+## Contributing 🤝
 
-This extension contributes the following settings:
+Issues and PRs are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.💡
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+## License 📄
 
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
+MIT License
 
 ---
 
-## Following extension guidelines
+> Maintained by the [TerminalNotebook](https://github.com/<your-github>/TerminalNotebook) team.
 
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
+TerminalNotebook is a Visual Studio Code extension that provides customizable terminal command shortcut buttons, allowing you to quickly execute frequently used terminal commands with one click, improving your development and operations efficiency.✨
 
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
+<!-- ![TerminalNotebook Banner](src/icons-terminal.png) -->
 
-## Working with Markdown
+## Features 🛠️
 
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
+- Organize and save terminal sessions as notebooks inside VS Code 📒
+- Mix commands, outputs, and Markdown notes in one place 📝
+- Easily review and reuse command history ⏪
+- Manage multiple terminal sessions 🖥️
+- One-click export/share of terminal notebooks 📤
 
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
+## Installation 🧩
 
-## For more information
+1. Search for `TerminalNotebook` in the VS Code Extension Marketplace and install 🛒
+2. Or run in the command palette:
 
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+   ```sh
+   ext install <your-publisher>.terminalnotebook
+   ```
 
-**Enjoy!**
+## Quick Start ⚡
+
+1. Use the custom terminal command shortcut buttons provided by TerminalNotebook in the sidebar or editor to execute preset or user-defined terminal commands with one click 🎯
+2. You can configure your frequently used commands in settings for quick access ⚙️
+3. Supports command grouping and management 🗂️
+
+## Contributing 🤝
+
+Issues and PRs are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.💡
+
+## License 📄
+
+MIT License
+
+---
+
+> Maintained by the [TerminalNotebook](https://github.com/<your-github>/TerminalNotebook) team.
+
+---
+
+> 由 [TerminalNotebook](https://github.com/<your-github>/TerminalNotebook) 团队开发维护。

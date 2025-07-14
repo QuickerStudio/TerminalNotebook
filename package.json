@@ -3,6 +3,11 @@
   "displayName": "TerminalNotebook",
   "description": "VS Code 扩展，React 侧边栏窗口，支持 TerminalNotebook 标签管理，模块化小组件，ts/tsx/css 文件结构。",
   "version": "0.0.1",
+  "icon": "icons-terminal.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/QuickerStudio/TerminalNotebook.git"
+  },
   "engines": {
     "vscode": "^1.54.0"
   },
@@ -17,7 +22,7 @@
         {
           "id": "terminalnotebook",
           "title": "TerminalNotebook",
-          "icon": "src/icons-terminal.png"
+          "icon": "icons-terminal.png"
         }
       ]
     },
