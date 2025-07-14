@@ -2,7 +2,7 @@
 
 # TerminalNotebook 🚀
 
-![TerminalNotebook Demo](https://raw.githubusercontent.com/QuickerStudio/TerminalNotebook/main/assets/demo-screenshot.png)
+![TerminalNotebook Demo](https://github.com/QuickerStudio/TerminalNotebook/blob/main/Main.png)
 
 **VS Code Terminal Command Notebook**  
 Manage and quickly execute terminal commands to boost your development efficiency.
