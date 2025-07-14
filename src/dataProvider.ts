@@ -46,15 +46,22 @@ export class DataProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
     if (element) {
       return Promise.resolve([]);
     }
-    
+
     return Promise.resolve(
       this.tabs.map(tab => {
-        const item = new vscode.TreeItem(tab.label);
+        const item = new vscode.TreeItem(tab.label, vscode.TreeItemCollapsibleState.None);
         item.id = tab.id;
+        // 使标签可编辑
+        item.contextValue = 'editableTab';
+        item.description = '';
+        item.tooltip = '双击或右键重命名标签';
+        // 设置自定义图标
+        item.iconPath = this.context.asAbsolutePath('src/icons-terminal.png');
+        // 支持双击重命名
         item.command = {
-          command: 'terminalnotebook.openTerminal',
-          title: 'Open Terminal',
-          arguments: [tab.id]
+          command: 'terminalnotebook.renameTab',
+          title: '重命名标签',
+          arguments: [item]
         };
         return item;
       })

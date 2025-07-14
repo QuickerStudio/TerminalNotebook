@@ -17,7 +17,7 @@
         {
           "id": "terminalnotebook",
           "title": "TerminalNotebook",
-          "icon": "src/webview/terminalicon.png"
+          "icon": "src/icons-terminal.png"
         }
       ]
     },
@@ -34,8 +34,21 @@
       {
         "command": "terminalnotebook.helloWorld",
         "title": "Hello World"
+      },
+      {
+        "command": "terminalnotebook.renameTab",
+        "title": "重命名标签"
       }
-    ]
+    ],
+    "menus": {
+      "view/item/context": [
+        {
+          "command": "terminalnotebook.renameTab",
+          "when": "view == terminalnotebook.view && viewItem == editableTab",
+          "group": "inline"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run package",
