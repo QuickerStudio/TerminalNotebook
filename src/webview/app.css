@@ -1,0 +1,7 @@
+/* 全局样式，可根据需要扩展 */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #1e1e1e;
+  color: #fff;
+}
