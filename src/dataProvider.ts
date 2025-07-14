@@ -16,10 +16,29 @@ export class DataProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
     if (saved && Array.isArray(saved)) {
       this.tabs = saved;
     } else {
-      // 首次使用时可初始化示例数据
+      // 首次使用时可初始化常用命令示例标签
       this.tabs = [
-        { label: '终端会话 1', id: 'terminal-1' },
-        { label: '终端会话 2', id: 'terminal-2' },
+        { label: 'dir', id: 'terminal-1' }, // 查看当前目录（Windows）
+        { label: 'node -v', id: 'terminal-2' }, // 查看 Node 版本
+        { label: 'code .', id: 'terminal-3' }, // 用 VS Code 打开当前目录
+        { label: 'help', id: 'terminal-4' }, // CMD 帮助
+        { label: 'systeminfo', id: 'terminal-5' }, // 查看系统信息
+        { label: 'yo', id: 'terminal-6' }, // 运行 yeoman 脚手架
+        { label: 'npm install', id: 'terminal-7' }, // 安装 npm 依赖
+        { label: 'npm update', id: 'terminal-8' }, // 更新 npm 依赖
+        { label: 'git status', id: 'terminal-9' }, // 查看 Git 状态
+        { label: 'git pull', id: 'terminal-10' }, // 拉取远程代码
+        { label: 'git push', id: 'terminal-11' }, // 推送代码到远程
+        { label: 'npm run build', id: 'terminal-12' }, // 构建项目
+        { label: 'npm start', id: 'terminal-13' }, // 启动项目
+        { label: 'npm run test', id: 'terminal-14' }, // 运行测试
+        { label: 'npx create-react-app my-app', id: 'terminal-15' }, // 创建 React 项目
+        { label: 'python --version', id: 'terminal-16' }, // 查看 Python 版本
+        { label: 'pip install 包名', id: 'terminal-17' }, // 安装 Python 包
+        { label: 'explorer .', id: 'terminal-18' }, // 打开资源管理器
+        { label: 'cls', id: 'terminal-19' }, // 清屏（Windows）
+        { label: 'clear', id: 'terminal-20' }, // 清屏（Linux/macOS）
+        { label: 'echo Hello World', id: 'terminal-21' } // 输出文本
       ];
       this.saveTabs();
     }
