@@ -68,9 +68,29 @@
         "icon": "$(star-add)"
       },
       {
-        "command": "terminalnotebook.favoriteTabs",
-        "title": "收藏夹",
-        "icon": "$(star)"
+        "command": "terminalnotebook.favorite0",
+        "title": "收藏1",
+        "icon": "$(star-full)"
+      },
+      {
+        "command": "terminalnotebook.favorite1",
+        "title": "收藏2",
+        "icon": "$(star-full)"
+      },
+      {
+        "command": "terminalnotebook.favorite2",
+        "title": "收藏3",
+        "icon": "$(star-full)"
+      },
+      {
+        "command": "terminalnotebook.favorite3",
+        "title": "收藏4",
+        "icon": "$(star-full)"
+      },
+      {
+        "command": "terminalnotebook.favorite4",
+        "title": "收藏5",
+        "icon": "$(star-full)"
       },
       {
         "command": "terminalnotebook.manageFavorites",
@@ -98,10 +118,34 @@
       ],
       "view/title": [
       {
-        "command": "terminalnotebook.favoriteTabs",
-        "when": "view == terminalnotebook.view && terminalnotebook.hasFavorites",
+        "command": "terminalnotebook.favorite0",
+        "when": "view == terminalnotebook.view && terminalnotebook.favorite0Visible",
         "group": "navigation@0",
-        "icon": "$(star)"
+        "icon": "$(star-full)"
+      },
+      {
+        "command": "terminalnotebook.favorite1",
+        "when": "view == terminalnotebook.view && terminalnotebook.favorite1Visible",
+        "group": "navigation@0",
+        "icon": "$(star-full)"
+      },
+      {
+        "command": "terminalnotebook.favorite2",
+        "when": "view == terminalnotebook.view && terminalnotebook.favorite2Visible",
+        "group": "navigation@0",
+        "icon": "$(star-full)"
+      },
+      {
+        "command": "terminalnotebook.favorite3",
+        "when": "view == terminalnotebook.view && terminalnotebook.favorite3Visible",
+        "group": "navigation@0",
+        "icon": "$(star-full)"
+      },
+      {
+        "command": "terminalnotebook.favorite4",
+        "when": "view == terminalnotebook.view && terminalnotebook.favorite4Visible",
+        "group": "navigation@0",
+        "icon": "$(star-full)"
       },
         {
           "command": "terminalnotebook.manageFavorites",
