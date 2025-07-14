@@ -17,7 +17,7 @@
         {
           "id": "terminalnotebook",
           "title": "TerminalNotebook",
-          "icon": "src/webview/terminalnotebook.svg"
+          "icon": "src/webview/terminalicon.png"
         }
       ]
     },
