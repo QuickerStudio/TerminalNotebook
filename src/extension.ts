@@ -15,8 +15,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   // 创建树视图并添加工具栏
   const treeView = vscode.window.createTreeView('terminalnotebook.view', {
-    treeDataProvider: dataProvider,
-    showCollapseAll: true
+    treeDataProvider: dataProvider
   });
 
   // 添加标签按钮到工具栏

@@ -38,6 +38,14 @@
       {
         "command": "terminalnotebook.renameTab",
         "title": "重命名标签"
+      },
+      {
+        "command": "terminalnotebook.addTag",
+        "title": "添加标签",
+        "icon": {
+          "light": "$(plus)",
+          "dark": "$(plus)"
+        }
       }
     ],
     "menus": {
@@ -46,6 +54,13 @@
           "command": "terminalnotebook.renameTab",
           "when": "view == terminalnotebook.view && viewItem == editableTab",
           "group": "inline"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "terminalnotebook.addTag",
+          "when": "view == terminalnotebook.view",
+          "group": "navigation@1"
         }
       ]
     }
