@@ -4,17 +4,30 @@ export class DataProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
   private tabs: { label: string; id: string }[] = [];
   private _onDidChangeTreeData = new vscode.EventEmitter<vscode.TreeItem | undefined | void>();
   readonly onDidChangeTreeData = this._onDidChangeTreeData.event;
+  private readonly storageKey = 'terminalnotebook.tabs';
 
   constructor(private readonly context: vscode.ExtensionContext) {
-    this.initializeSampleData();
+    this.loadTabs();
   }
 
-  // 初始化示例数据
-  private initializeSampleData() {
-    this.tabs = [
-      { label: '终端会话 1', id: 'terminal-1' },
-      { label: '终端会话 2', id: 'terminal-2' },
-    ];
+  // 加载本地持久化标签
+  private loadTabs() {
+    const saved = this.context.globalState.get<{ label: string; id: string }[]>(this.storageKey);
+    if (saved && Array.isArray(saved)) {
+      this.tabs = saved;
+    } else {
+      // 首次使用时可初始化示例数据
+      this.tabs = [
+        { label: '终端会话 1', id: 'terminal-1' },
+        { label: '终端会话 2', id: 'terminal-2' },
+      ];
+      this.saveTabs();
+    }
+  }
+
+  // 保存标签到本地
+  private saveTabs() {
+    this.context.globalState.update(this.storageKey, this.tabs);
   }
 
   // 获取所有标签页数据
@@ -29,11 +42,13 @@ export class DataProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
       id: `terminal-${Date.now()}`,
     };
     this.tabs.push(newTab);
+    this.saveTabs();
     this.refresh();
   }
 
   // 刷新视图
   public refresh(): void {
+    this.saveTabs();
     this._onDidChangeTreeData.fire();
   }
 
