@@ -54,15 +54,10 @@ export class DataProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
         // 使标签可编辑
         item.contextValue = 'editableTab';
         item.description = '';
-        item.tooltip = '双击或右键重命名标签';
+        item.tooltip = '右键重命名标签';
         // 设置自定义图标
         item.iconPath = this.context.asAbsolutePath('src/icons-terminal.png');
-        // 支持双击重命名
-        item.command = {
-          command: 'terminalnotebook.renameTab',
-          title: '重命名标签',
-          arguments: [item]
-        };
+        // 不再设置 command，禁用单击/双击重命名
         return item;
       })
     );
