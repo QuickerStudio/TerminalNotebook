@@ -106,13 +106,13 @@
           "group": "inline@1"
         },
         {
-          "command": "terminalnotebook.deleteTab",
-          "when": "view == terminalnotebook.view && viewItem =~ /deletableTab/",
+          "command": "terminalnotebook.addFavorite",
+          "when": "view == terminalnotebook.view",
           "group": "inline@2"
         },
         {
-          "command": "terminalnotebook.addFavorite",
-          "when": "view == terminalnotebook.view",
+          "command": "terminalnotebook.deleteTab",
+          "when": "view == terminalnotebook.view && viewItem =~ /deletableTab/",
           "group": "inline@3"
         }
       ],
