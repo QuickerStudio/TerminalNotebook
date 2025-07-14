@@ -1,7 +1,7 @@
 {
   "name": "terminalnotebook",
   "displayName": "TerminalNotebook",
-  "description": "管理和快速执行终端命令的终端命令笔记本。",
+  "description": "A terminal command notebook for managing and quickly executing terminal commands.",
   "version": "1.0.0",
   "icon": "icons-terminal.png",
   "repository": {
@@ -28,10 +28,10 @@
     },
     "views": {
       "terminalnotebook": [
-        
+
         {
           "id": "terminalnotebook.view",
-          "name": "Terminal Notebook",
+          "name": "TerminalNotebook",
           "icon": "icons-terminal.png"
         }
       ]
@@ -39,73 +39,73 @@
     "commands": [
       {
         "command": "terminalnotebook.copyTabLabel",
-        "title": "复制命令",
+        "title": "Copy Command",
         "icon": "$(copy)"
       },
       {
         "command": "terminalnotebook.renameTab",
-        "title": "重命名标签",
+        "title": "Update Notebook",
         "icon": "$(edit)"
       },
       {
         "command": "terminalnotebook.deleteTab",
-        "title": "删除标签",
+        "title": "Delete Tab",
         "icon": "$(close)"
       },
       {
         "command": "terminalnotebook.addTag",
-        "title": "添加标签",
+        "title": "Add Note",
         "icon": "$(plus)"
       },
       {
         "command": "terminalnotebook.exportTabs",
-        "title": "分享",
+        "title": "Export",
         "icon": "$(cloud-upload)"
       },
       {
         "command": "terminalnotebook.importTabs",
-        "title": "导入标签",
+        "title": "Import Tabs",
         "icon": "$(cloud-download)"
       },
       {
         "command": "terminalnotebook.addFavorite",
-        "title": "添加到收藏夹",
+        "title": "Add to Favorites",
         "icon": "$(star-add)"
       },
       {
         "command": "terminalnotebook.favorite0",
-        "title": "收藏1",
+        "title": "Favorite 1",
         "icon": "$(star-full)"
       },
       {
         "command": "terminalnotebook.favorite1",
-        "title": "收藏2",
+        "title": "Favorite 2",
         "icon": "$(star-full)"
       },
       {
         "command": "terminalnotebook.favorite2",
-        "title": "收藏3",
+        "title": "Favorite 3",
         "icon": "$(star-full)"
       },
       {
         "command": "terminalnotebook.favorite3",
-        "title": "收藏4",
+        "title": "Favorite 4",
         "icon": "$(star-full)"
       },
       {
         "command": "terminalnotebook.favorite4",
-        "title": "收藏5",
+        "title": "Favorite 5",
         "icon": "$(star-full)"
       },
       {
         "command": "terminalnotebook.manageFavorites",
-        "title": "管理收藏夹",
+        "title": "Manage Favorites",
         "icon": "$(trash)"
       }
       ,
       {
         "command": "terminalnotebook.removeFavorite",
-        "title": "移除收藏夹",
+        "title": "Remove from Favorites",
         "icon": "$(star-delete)"
       }
     ],
@@ -140,31 +140,31 @@
       "view/title": [
       {
         "command": "terminalnotebook.favorite0",
-        "when": "view == terminalnotebook.view && terminalnotebook.favorite0Visible",
+          "when": "view == terminalnotebook.view && terminalnotebook.favorite0Visible",
         "group": "navigation@0",
         "icon": "$(star-full)"
       },
       {
         "command": "terminalnotebook.favorite1",
-        "when": "view == terminalnotebook.view && terminalnotebook.favorite1Visible",
+          "when": "view == terminalnotebook.view && terminalnotebook.favorite1Visible",
         "group": "navigation@0",
         "icon": "$(star-full)"
       },
       {
         "command": "terminalnotebook.favorite2",
-        "when": "view == terminalnotebook.view && terminalnotebook.favorite2Visible",
+          "when": "view == terminalnotebook.view && terminalnotebook.favorite2Visible",
         "group": "navigation@0",
         "icon": "$(star-full)"
       },
       {
         "command": "terminalnotebook.favorite3",
-        "when": "view == terminalnotebook.view && terminalnotebook.favorite3Visible",
+          "when": "view == terminalnotebook.view && terminalnotebook.favorite3Visible",
         "group": "navigation@0",
         "icon": "$(star-full)"
       },
       {
         "command": "terminalnotebook.favorite4",
-        "when": "view == terminalnotebook.view && terminalnotebook.favorite4Visible",
+          "when": "view == terminalnotebook.view && terminalnotebook.favorite4Visible",
         "group": "navigation@0",
         "icon": "$(star-full)"
       },

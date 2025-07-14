@@ -1,14 +1,13 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-
-import { DataProvider } from './dataProvider';
+import { TreeData } from './TreeData';
 import { TerminalManager } from './Terminal';
 
-// 收藏夹按钮动态注册用
+// For dynamic registration of favorite buttons
 const favoriteDisposables: vscode.Disposable[] = [];
 export function updateFavoriteCommands(context: vscode.ExtensionContext) {
-  // 先清理旧的 disposable
+  // Clean up old disposables first
   while (favoriteDisposables.length) {
     const d = favoriteDisposables.pop();
     if (d) { d.dispose(); }
@@ -27,27 +26,27 @@ export function updateFavoriteCommands(context: vscode.ExtensionContext) {
   }
 }
 
-// 收藏夹最多显示数量
+// Maximum number of favorites displayed
 const MAX_FAVORITES = 5;
 
 function getFavorites(context: vscode.ExtensionContext): { label: string; id: string }[] {
   return context.globalState.get<{ label: string; id: string }[]>('terminalnotebook.favorites') || [];
 }
 
-function setFavorites(context: vscode.ExtensionContext, favorites: { label: string; id: string }[], dataProvider?: DataProvider) {
+function setFavorites(context: vscode.ExtensionContext, favorites: { label: string; id: string }[], treeData?: TreeData) {
   context.globalState.update('terminalnotebook.favorites', favorites);
-  // setContext 需等待 globalState 更新后再调用，确保菜单刷新
+  // setContext should be called after globalState update to ensure menu refresh
   setTimeout(() => {
     vscode.commands.executeCommand('setContext', 'terminalnotebook.hasFavorites', favorites.length > 0);
     updateFavoriteCommands(context);
-    if (dataProvider) {
-      dataProvider.refresh();
+    if (treeData) {
+      treeData.refresh();
     }
   }, 10);
 }
 
 export function activate(context: vscode.ExtensionContext) {
-  // 注册复制命令
+  // Register copy command
   context.subscriptions.push(vscode.commands.registerCommand('terminalnotebook.copyTabLabel', (labelOrItem: string | vscode.TreeItem) => {
     let text = '';
     if (typeof labelOrItem === 'string') {
@@ -57,207 +56,202 @@ export function activate(context: vscode.ExtensionContext) {
     }
     if (text) {
       vscode.env.clipboard.writeText(text);
-      vscode.window.showInformationMessage(`命令已复制: ${text}`);
+      vscode.window.showInformationMessage(`Command copied: ${text}`);
     } else {
-      vscode.window.showWarningMessage('未找到可复制的命令');
+      vscode.window.showWarningMessage('No command found to copy');
     }
   }));
-  // 初始化 setContext，确保菜单首次显示正确
+  // Initialize setContext to ensure menu displays correctly on first load
   vscode.commands.executeCommand('setContext', 'terminalnotebook.hasFavorites', getFavorites(context).length > 0);
   updateFavoriteCommands(context);
-  // 创建数据提供程序实例
-  const dataProvider = new DataProvider(context);
-  // 创建树视图
+  // Create data provider instance
+  const treeData: TreeData = new TreeData(context);
+  // Create tree view
   const treeView = vscode.window.createTreeView('terminalnotebook.view', {
-    treeDataProvider: dataProvider
+    treeDataProvider: treeData
   });
 
-  // 添加到收藏夹命令
+  // Add to favorites command
   context.subscriptions.push(vscode.commands.registerCommand('terminalnotebook.addFavorite', (item: vscode.TreeItem) => {
     const favorites = getFavorites(context);
     if (favorites.length >= MAX_FAVORITES) {
-      vscode.window.showWarningMessage(`收藏夹最多只能有${MAX_FAVORITES}个标签。`);
+      vscode.window.showWarningMessage(`Favorites can have up to ${MAX_FAVORITES} tabs only.`);
       return;
     }
-    // 避免重复收藏
+    // Avoid duplicate favorites
     if (favorites.some(f => f.id === item.id)) {
-      vscode.window.showInformationMessage('该标签已在收藏夹中。');
+      vscode.window.showInformationMessage('This tab is already in favorites.');
       return;
     }
     favorites.push({ label: item.label?.toString() || '', id: item.id || '' });
-    setFavorites(context, favorites, dataProvider);
-    vscode.window.showInformationMessage('已添加到收藏夹');
+    setFavorites(context, favorites, treeData);
+    vscode.window.showInformationMessage('Added to favorites');
   }));
 
-  // 收藏夹按钮命令（弹出快速选择）
+  // Favorite button command (show quick pick)
   context.subscriptions.push(vscode.commands.registerCommand('terminalnotebook.favoriteTabs', async () => {
     const favorites = getFavorites(context);
     if (favorites.length === 0) {
-      vscode.window.showInformationMessage('收藏夹为空');
+      vscode.window.showInformationMessage('Favorites is empty');
       return;
     }
     const pick = await vscode.window.showQuickPick(
       favorites.map(f => ({
         label: f.label,
         id: f.id,
-        detail: f.label, // 让 detail 也显示命令行
+        detail: f.label, // Show command line in detail as well
         alwaysShow: true,
-        // VS Code QuickPick 不支持自定义图标，但可以用 emoji 或特殊字符
+        // VS Code QuickPick does not support custom icons, but emoji or special characters can be used
         description: '⭐',
-        tooltip: f.label // 虽然 tooltip 不生效，但保留字段
+        tooltip: f.label // Tooltip is kept for compatibility, though it does not take effect
       })),
-      { placeHolder: '选择要执行的收藏命令' }
+      { placeHolder: 'Select a favorite command to execute' }
     );
     if (pick) {
       TerminalManager.openAndRun(pick.id, pick.label);
     }
-    setFavorites(context, favorites, dataProvider);
+    setFavorites(context, favorites, treeData);
     updateFavoriteCommands(context);
-    vscode.window.showInformationMessage('已添加到收藏夹');
+    vscode.window.showInformationMessage('Added to favorites');
   }));
 
-  // 管理收藏夹命令（删除）
+  // Manage favorites command (delete)
   context.subscriptions.push(vscode.commands.registerCommand('terminalnotebook.manageFavorites', async () => {
     const favorites = getFavorites(context);
     if (favorites.length === 0) {
-      vscode.window.showInformationMessage('收藏夹为空');
+      vscode.window.showInformationMessage('Favorites is empty');
       return;
     }
     
     const items = favorites.map(f => ({
       label: f.label,
-      description: '点击删除',
+      description: 'Click to delete',
       favorite: f
     }));
 
     const selected = await vscode.window.showQuickPick(items, {
-      placeHolder: '选择要删除的收藏项'
+      placeHolder: 'Select a favorite to delete'
     });
 
     if (selected) {
       const newFavorites = favorites.filter(f => f.id !== selected.favorite.id);
-      setFavorites(context, newFavorites, dataProvider);
+      setFavorites(context, newFavorites, treeData);
       updateFavoriteCommands(context);
-      vscode.window.showInformationMessage(`已删除收藏: ${selected.label}`);
+      vscode.window.showInformationMessage(`Favorite deleted: ${selected.label}`);
     }
   }));
-
-  // ...existing code...
-
-  // 树视图工具栏
-
-  // 注册导出标签命令
+  // Register export tabs command
   context.subscriptions.push(vscode.commands.registerCommand('terminalnotebook.exportTabs', async () => {
-    const tabs = dataProvider.getTabs();
+    const tabs = treeData.getTabs();
     const exportData = {
       type: 'TerminalNotebookTabs',
       version: 1,
-      tabs: tabs.map(tab => ({ label: tab.label, id: tab.id }))
+      tabs: tabs.map((tab: {label: string, id: string}) => ({ label: tab.label, id: tab.id }))
     };
     const uri = await vscode.window.showSaveDialog({
       filters: { 'TerminalNotebook Tabs': ['json'] },
-      saveLabel: '导出标签列表为 JSON 文件'
+      saveLabel: 'Export tab list as JSON file'
     });
     if (uri) {
       await vscode.workspace.fs.writeFile(uri, Buffer.from(JSON.stringify(exportData, null, 2), 'utf8'));
-      vscode.window.showInformationMessage('标签命令已导出！');
+      vscode.window.showInformationMessage('Tab commands exported!');
     }
   }));
-  // 激活时初始化收藏按钮
+  // Initialize favorite buttons on activation
   updateFavoriteCommands(context);
 
-  // 注册导入标签命令
+  // Register import tabs command
   context.subscriptions.push(vscode.commands.registerCommand('terminalnotebook.importTabs', async () => {
     const uris = await vscode.window.showOpenDialog({
       canSelectMany: false,
       filters: { 'TerminalNotebook Tabs': ['json'] },
-      openLabel: '导入标签列表 JSON 文件'
+      openLabel: 'Import tab list JSON file'
     });
     if (uris && uris.length > 0) {
       try {
         const fileData = await vscode.workspace.fs.readFile(uris[0]);
         const json = JSON.parse(Buffer.from(fileData).toString('utf8'));
         if (json.type === 'TerminalNotebookTabs' && Array.isArray(json.tabs)) {
-          // 合并导入的标签，避免 id 冲突
-          const existing = dataProvider.getTabs();
+          // Merge imported tabs, avoid id conflicts
+          const existing = treeData.getTabs();
           const newTabs = json.tabs.filter((t: { label: string }) => !existing.some((e: { label: string }) => e.label === t.label));
           existing.push(...newTabs.map((t: { label: string }) => ({ label: t.label, id: `terminal-${Date.now()}-${Math.random().toString(36).slice(2,8)}` })));
-          dataProvider.refresh();
-          vscode.window.showInformationMessage('标签命令已导入！');
+          treeData.refresh();
+          vscode.window.showInformationMessage('Tab commands imported!');
         } else {
-          vscode.window.showErrorMessage('文件格式不正确，无法导入。');
+          vscode.window.showErrorMessage('File format incorrect, cannot import.');
         }
       } catch (e) {
-        vscode.window.showErrorMessage('导入失败：' + (e as Error).message);
+        vscode.window.showErrorMessage('Import failed: ' + (e as Error).message);
       }
     }
   }));
 
-  // 添加标签按钮到工具栏
+  // Add tag button to toolbar
   context.subscriptions.push(vscode.commands.registerCommand('terminalnotebook.addTag', async () => {
     const newLabel = await vscode.window.showInputBox({
-      prompt: '请输入新标签名',
-      validateInput: (input) => input.trim() === '' ? '标签不能为空' : undefined
+      prompt: 'Please enter a new tab name',
+      validateInput: (input) => input.trim() === '' ? 'Tab name cannot be empty' : undefined
     });
     if (newLabel) {
-      // 获取当前标签数据
-      const tabs = dataProvider.getTabs();
-      // 生成唯一 id
+      // Get current tab data
+      const tabs = treeData.getTabs();
+      // Generate unique id
       const id = Date.now().toString();
-      // 添加新标签
+      // Add new tab
       tabs.push({ id, label: newLabel });
-      dataProvider.refresh();
-      vscode.window.showInformationMessage(`已添加标签：${newLabel}`);
+      treeData.refresh();
+      vscode.window.showInformationMessage(`Tab added: ${newLabel}`);
     }
   }));
 
-  // 在视图标题栏添加按钮
+  // Add buttons to view title bar
   treeView.title = 'TerminalNotebook';
-  treeView.description = '标签管理';
-  // 通过 package.json 配置按钮，命令已注册
+  treeView.description = 'Manage and quickly execute terminal commands';
+  // Buttons are configured via package.json, commands already registered
 
-  // 注册重命名命令
+  // Register rename command
   const renameTabCommand = vscode.commands.registerCommand('terminalnotebook.renameTab', async (item: vscode.TreeItem) => {
     const oldLabel = item.label?.toString() || '';
     const newLabel = await vscode.window.showInputBox({
-      prompt: '重命名标签',
+      prompt: 'Update notebook',
       value: oldLabel,
-      validateInput: (input) => input.trim() === '' ? '标签不能为空' : undefined
+      validateInput: (input) => input.trim() === '' ? 'Tab name cannot be empty' : undefined
     });
     if (newLabel && newLabel !== oldLabel) {
       // 修改数据
-      const tabs = dataProvider.getTabs();
+      const tabs = treeData.getTabs();
       const tab = tabs.find((t: { id: string }) => t.id === item.id);
       if (tab) {
         tab.label = newLabel;
-        dataProvider.refresh();
+        treeData.refresh();
       }
     }
   });
   context.subscriptions.push(renameTabCommand);
 
-  // 注册删除标签命令
+  // Register delete tab command
   const deleteTabCommand = vscode.commands.registerCommand('terminalnotebook.deleteTab', (item: vscode.TreeItem) => {
-    const tabs = dataProvider.getTabs();
+    const tabs = treeData.getTabs();
     const idx = tabs.findIndex((t: { id: string }) => t.id === item.id);
     if (idx !== -1) {
       tabs.splice(idx, 1);
-      dataProvider.refresh();
-      vscode.window.showInformationMessage('标签已删除');
+      treeData.refresh();
+      vscode.window.showInformationMessage('Tab deleted');
     }
   });
   context.subscriptions.push(deleteTabCommand);
 
-  // 注册数据刷新命令
+  // Register data refresh command
   const refreshCommand = vscode.commands.registerCommand('terminalnotebook.refreshView', () => {
-    vscode.window.showInformationMessage('刷新视图数据...');
-    // 实际刷新逻辑将在 Webview 提供程序中处理
+    vscode.window.showInformationMessage('Refreshing view data...');
+    // Actual refresh logic will be handled in the Webview provider
   });
   context.subscriptions.push(refreshCommand);
 
-  // 注册点击标签后自动执行命令
+  // Register command to execute when tab is clicked
   const openTerminalCommand = vscode.commands.registerCommand('terminalnotebook.openTerminal', (item: vscode.TreeItem) => {
-    // item.id: 标签唯一 id，item.label: 标签标题（命令行）
+    // item.id: unique tab id, item.label: tab title (command line)
     let cmd = '';
     if (item && item.label) {
       cmd = item.label.toString();
@@ -265,11 +259,11 @@ export function activate(context: vscode.ExtensionContext) {
     if (item && item.id && cmd) {
       TerminalManager.openAndRun(item.id.toString(), cmd);
     } else {
-      vscode.window.showWarningMessage('标签信息不完整，无法执行命令');
+      vscode.window.showWarningMessage('Tab information is incomplete, cannot execute command');
     }
   });
+
   context.subscriptions.push(openTerminalCommand);
 }
 
-// This method is called when your extension is deactivated
 export function deactivate() {}
