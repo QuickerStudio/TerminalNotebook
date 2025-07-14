@@ -7,12 +7,26 @@ import { DataProvider } from './dataProvider';
 export function activate(context: vscode.ExtensionContext) {
   console.log('TerminalNotebook extension is now active!');
 
-
   // 创建数据提供程序实例
   const dataProvider = new DataProvider(context);
 
   // 注册树视图数据提供程序
   vscode.window.registerTreeDataProvider('terminalnotebook.view', dataProvider);
+
+  // 创建树视图并添加工具栏
+  const treeView = vscode.window.createTreeView('terminalnotebook.view', {
+    treeDataProvider: dataProvider,
+    showCollapseAll: true
+  });
+
+  // 添加标签按钮到工具栏
+  context.subscriptions.push(vscode.commands.registerCommand('terminalnotebook.addTag', () => {
+    vscode.window.showInformationMessage('标签功能已触发');
+  }));
+
+  // 在视图标题栏添加按钮
+  treeView.title = 'TerminalNotebook';
+  treeView.description = '标签管理';
 
   // 注册重命名命令
   const renameTabCommand = vscode.commands.registerCommand('terminalnotebook.renameTab', async (item: vscode.TreeItem) => {
@@ -59,3 +73,4 @@ export function activate(context: vscode.ExtensionContext) {
 
 // This method is called when your extension is deactivated
 export function deactivate() {}
+
