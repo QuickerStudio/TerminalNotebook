@@ -73,6 +73,16 @@
         "icon": "$(lock)"
       },
       {
+        "command": "terminalnotebook.lockCommand",
+        "title": "锁定",
+        "icon": "icons-lock-open.png"
+      },
+      {
+        "command": "terminalnotebook.unlockCommand", 
+        "title": "解锁",
+        "icon": "icons-lock.png"
+      },
+      {
         "command": "terminalnotebook.addFavorite",
         "title": "Add to Favorites",
         "icon": "$(star-add)"
@@ -195,16 +205,14 @@
         }
         ,
         {
-          "command": "terminalnotebook.toggleLock",
+          "command": "terminalnotebook.unlockCommand",
           "when": "view == terminalnotebook.view && terminalnotebook.locked",
-          "group": "navigation@4",
-          "icon": "icons-lock.png"
+          "group": "navigation@4"
         },
         {
-          "command": "terminalnotebook.toggleLock",
+          "command": "terminalnotebook.lockCommand",
           "when": "view == terminalnotebook.view && !terminalnotebook.locked",
-          "group": "navigation@4",
-          "icon": "icons-lock-open.png"
+          "group": "navigation@4"
         }
       ]
     }

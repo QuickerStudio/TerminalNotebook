@@ -24,8 +24,8 @@ export function activate(context: vscode.ExtensionContext) {
   setLocked(initialLockState);
   TerminalManager.setLockChecker(isLocked);
 
-  // 注册切换安全锁命令
-  context.subscriptions.push(vscode.commands.registerCommand('terminalnotebook.toggleLock', async () => {
+  // 切换安全锁的通用函数
+  async function toggleLockState() {
     const locked = isLocked();
     const newState = !locked;
 
@@ -38,7 +38,16 @@ export function activate(context: vscode.ExtensionContext) {
 
     // 显示状态消息
     vscode.window.showInformationMessage(newState ? '已锁定，禁止执行命令' : '已解锁，可以执行命令');
-  }));
+  }
+
+  // 注册切换安全锁命令
+  context.subscriptions.push(vscode.commands.registerCommand('terminalnotebook.toggleLock', toggleLockState));
+
+  // 注册锁定命令（显示开锁图标，点击后锁定）
+  context.subscriptions.push(vscode.commands.registerCommand('terminalnotebook.lockCommand', toggleLockState));
+
+  // 注册解锁命令（显示锁定图标，点击后解锁）
+  context.subscriptions.push(vscode.commands.registerCommand('terminalnotebook.unlockCommand', toggleLockState));
 
   const treeView = vscode.window.createTreeView('terminalnotebook.view', {
     treeDataProvider: treeData
