@@ -1,49 +1,30 @@
 import * as vscode from 'vscode';
+import { Memory } from './Memory';
+import { DEFAULT_TABS } from './Default';
 
 export class TreeData implements vscode.TreeDataProvider<vscode.TreeItem> {
   private tabs: { label: string; id: string }[] = [];
   private _onDidChangeTreeData = new vscode.EventEmitter<vscode.TreeItem | undefined | void>();
   readonly onDidChangeTreeData = this._onDidChangeTreeData.event;
-  private readonly storageKey = 'terminalnotebook.tabs';
+  private memory: Memory;
 
   constructor(private readonly context: vscode.ExtensionContext) {
+    this.memory = new Memory(context);
     this.loadTabs();
   }
 
   private loadTabs() {
-    const saved = this.context.globalState.get<{ label: string; id: string }[]>(this.storageKey);
+    const saved = this.memory.loadTabs();
     if (saved && Array.isArray(saved)) {
       this.tabs = saved;
     } else {
-      this.tabs = [
-        { label: 'dir', id: 'terminal-1' },
-        { label: 'node -v', id: 'terminal-2' },
-        { label: 'code .', id: 'terminal-3' },
-        { label: 'help', id: 'terminal-4' },
-        { label: 'systeminfo', id: 'terminal-5' },
-        { label: 'yo', id: 'terminal-6' },
-        { label: 'npm install', id: 'terminal-7' },
-        { label: 'npm update', id: 'terminal-8' },
-        { label: 'git status', id: 'terminal-9' },
-        { label: 'git pull', id: 'terminal-10' },
-        { label: 'git push', id: 'terminal-11' },
-        { label: 'npm run build', id: 'terminal-12' },
-        { label: 'npm start', id: 'terminal-13' },
-        { label: 'npm run test', id: 'terminal-14' },
-        { label: 'npx create-react-app my-app', id: 'terminal-15' },
-        { label: 'python --version', id: 'terminal-16' },
-        { label: 'pip install package_name', id: 'terminal-17' },
-        { label: 'explorer .', id: 'terminal-18' },
-        { label: 'cls', id: 'terminal-19' },
-        { label: 'clear', id: 'terminal-20' },
-        { label: 'echo Hello World', id: 'terminal-21' }
-      ];
+      this.tabs = [...DEFAULT_TABS];
       this.saveTabs();
     }
   }
 
   private saveTabs() {
-    this.context.globalState.update(this.storageKey, this.tabs);
+    this.memory.saveTabs(this.tabs);
   }
 
   public getTabs(): { label: string; id: string }[] {
