@@ -18,40 +18,22 @@ export function activate(context: vscode.ExtensionContext) {
     context.globalState.update(LOCK_KEY, val);
     vscode.commands.executeCommand('setContext', 'terminalnotebook.locked', val);
   }
+  
+  // 初始化安全锁状态并设置给TerminalManager
+  setLocked(isLocked());
+  TerminalManager.setLockChecker(isLocked);
 
   // 注册切换安全锁命令
   context.subscriptions.push(vscode.commands.registerCommand('terminalnotebook.toggleLock', () => {
     const locked = isLocked();
     setLocked(!locked);
+    // 更新TerminalManager的锁定检查器
+    TerminalManager.setLockChecker(isLocked);
     vscode.window.showInformationMessage(!locked ? '已锁定，禁止执行命令' : '已解锁，可以执行命令');
   }));
 
   const treeView = vscode.window.createTreeView('terminalnotebook.view', {
     treeDataProvider: treeData
-   , toolbar: [
-     {
-       command: 'terminalnotebook.exportTabs',
-       tooltip: '导出标签',
-       icon: 'cloud-upload',
-     },
-     {
-       command: 'terminalnotebook.importTabs',
-       tooltip: '导入标签',
-       icon: 'cloud-download',
-     },
-     {
-       command: 'terminalnotebook.toggleLock',
-       tooltip: () => isLocked() ? '解锁，允许执行命令' : '锁定，禁止执行命令',
-       icon: () => {
-         // 优先使用 VS Code 内置图标
-         if (isLocked()) {
-           return 'lock'; // VS Code 内置锁定图标
-         } else {
-           return 'unlock'; // VS Code 内置开锁图标
-         }
-       },
-     }
-   ]
   });
 
   // Initialize favorites
@@ -105,10 +87,6 @@ export function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(vscode.commands.registerCommand('terminalnotebook.openTerminal', (item: vscode.TreeItem) => {
     let cmd = '';
-    if (isLocked()) {
-      vscode.window.showWarningMessage('安全锁已开启，禁止执行命令');
-      return;
-    }
     if (item && item.label) {
       cmd = item.label.toString();
     }
