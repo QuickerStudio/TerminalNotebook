@@ -2,6 +2,11 @@
 <div align="center">
   <h1 style="font-size:3em;font-weight:bold;">TerminalNotebook</h1>
 </div>
+
+<div align="center">
+  <img src="https://github.com/QuickerStudio/TerminalNotebook/blob/main/TerminalNotebook/icons-terminal.png" alt="TerminalNotebook Logo" />
+</div>
+
 <div align="center">
   <span style="
     display:inline-block;
@@ -13,9 +18,7 @@
     text-shadow: 0 0 6px #00ffe7, 0 0 12px #ff00ea;
   ">Manage and quickly execute terminal commands to boost your development efficiency.</span>
 </div>
-<div align="center">
-  <img src="https://github.com/QuickerStudio/TerminalNotebook/blob/main/TerminalNotebook/icons-terminal.png" alt="TerminalNotebook Logo" />
-</div>
+
 
 ## 🖥️ Live Demo
 
