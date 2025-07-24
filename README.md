@@ -1,4 +1,5 @@
 
+
 <div align="center">
   <img src="https://github.com/QuickerStudio/TerminalNotebook/blob/main/TerminalNotebook/icons-terminal.png" alt="TerminalNotebook Logo" />
 </div>

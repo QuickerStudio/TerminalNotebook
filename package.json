@@ -1,0 +1,227 @@
+{
+  "name": "terminalnotebook",
+  "displayName": "TerminalNotebook",
+  "description": "A terminal command notebook for managing and quickly executing terminal commands.",
+  "version": "1.0.0",
+  "icon": "icons-terminal.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/QuickerStudio/TerminalNotebook.git"
+  },
+  "engines": {
+    "vscode": "^1.54.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "terminalnotebook",
+          "title": "TerminalNotebook",
+          "icon": "icons-terminal.png"
+        }
+      ]
+    },
+    "views": {
+      "terminalnotebook": [
+
+        {
+          "id": "terminalnotebook.view",
+          "name": "TerminalNotebook",
+          "icon": "icons-terminal.png"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "terminalnotebook.copyTabLabel",
+        "title": "Copy Command",
+        "icon": "$(copy)"
+      },
+      {
+        "command": "terminalnotebook.renameTab",
+        "title": "Update Notebook",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "terminalnotebook.deleteTab",
+        "title": "Delete Tab",
+        "icon": "$(close)"
+      },
+      {
+        "command": "terminalnotebook.addTag",
+        "title": "Add Note",
+        "icon": "$(plus)"
+      },
+      {
+        "command": "terminalnotebook.exportTabs",
+        "title": "Export",
+        "icon": "$(cloud-upload)"
+      },
+      {
+        "command": "terminalnotebook.importTabs",
+        "title": "Import Tabs",
+        "icon": "$(cloud-download)"
+      },
+      {
+        "command": "terminalnotebook.addFavorite",
+        "title": "Add to Favorites",
+        "icon": "$(star-add)"
+      },
+      {
+        "command": "terminalnotebook.favorite0",
+        "title": "Favorite 1",
+        "icon": "$(star-full)"
+      },
+      {
+        "command": "terminalnotebook.favorite1",
+        "title": "Favorite 2",
+        "icon": "$(star-full)"
+      },
+      {
+        "command": "terminalnotebook.favorite2",
+        "title": "Favorite 3",
+        "icon": "$(star-full)"
+      },
+      {
+        "command": "terminalnotebook.favorite3",
+        "title": "Favorite 4",
+        "icon": "$(star-full)"
+      },
+      {
+        "command": "terminalnotebook.favorite4",
+        "title": "Favorite 5",
+        "icon": "$(star-full)"
+      },
+      {
+        "command": "terminalnotebook.manageFavorites",
+        "title": "Manage Favorites",
+        "icon": "$(trash)"
+      }
+      ,
+      {
+        "command": "terminalnotebook.removeFavorite",
+        "title": "Remove from Favorites",
+        "icon": "$(star-delete)"
+      }
+    ],
+    "menus": {
+      "view/item/context": [
+        {
+          "command": "terminalnotebook.copyTabLabel",
+          "when": "view == terminalnotebook.view && viewItem =~ /copyableTab/",
+          "group": "inline@0"
+        },
+        {
+          "command": "terminalnotebook.renameTab",
+          "when": "view == terminalnotebook.view && viewItem =~ /editableTab/",
+          "group": "inline@1"
+        },
+        {
+          "command": "terminalnotebook.addFavorite",
+          "when": "view == terminalnotebook.view",
+          "group": "inline@2"
+        },
+        {
+          "command": "terminalnotebook.deleteTab",
+          "when": "view == terminalnotebook.view && viewItem =~ /deletableTab/",
+          "group": "inline@3"
+        },
+        {
+          "command": "terminalnotebook.copyTabLabel",
+          "when": "view == terminalnotebook.view && viewItem =~ /copyableTab/",
+          "group": "inline@4"
+        }
+      ],
+      "view/title": [
+      {
+        "command": "terminalnotebook.favorite0",
+          "when": "view == terminalnotebook.view && terminalnotebook.favorite0Visible",
+        "group": "navigation@0",
+        "icon": "$(star-full)"
+      },
+      {
+        "command": "terminalnotebook.favorite1",
+          "when": "view == terminalnotebook.view && terminalnotebook.favorite1Visible",
+        "group": "navigation@0",
+        "icon": "$(star-full)"
+      },
+      {
+        "command": "terminalnotebook.favorite2",
+          "when": "view == terminalnotebook.view && terminalnotebook.favorite2Visible",
+        "group": "navigation@0",
+        "icon": "$(star-full)"
+      },
+      {
+        "command": "terminalnotebook.favorite3",
+          "when": "view == terminalnotebook.view && terminalnotebook.favorite3Visible",
+        "group": "navigation@0",
+        "icon": "$(star-full)"
+      },
+      {
+        "command": "terminalnotebook.favorite4",
+          "when": "view == terminalnotebook.view && terminalnotebook.favorite4Visible",
+        "group": "navigation@0",
+        "icon": "$(star-full)"
+      },
+        {
+          "command": "terminalnotebook.manageFavorites",
+          "when": "view == terminalnotebook.view && terminalnotebook.hasFavorites",
+          "group": "navigation@0"
+        },
+        {
+          "command": "terminalnotebook.addTag",
+          "when": "view == terminalnotebook.view",
+          "group": "navigation@1"
+        },
+        {
+          "command": "terminalnotebook.exportTabs",
+          "when": "view == terminalnotebook.view",
+          "group": "navigation@2"
+        },
+        {
+          "command": "terminalnotebook.importTabs",
+          "when": "view == terminalnotebook.view",
+          "group": "navigation@3"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.54.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@types/react": "^18.2.62",
+    "@types/react-dom": "^18.2.19",
+    "@typescript-eslint/eslint-plugin": "^8.31.1",
+    "@typescript-eslint/parser": "^8.31.1",
+    "eslint": "^9.25.1",
+    "typescript": "^5.8.3",
+    "ts-loader": "^9.5.2",
+    "webpack": "^5.99.7",
+    "webpack-cli": "^6.0.1",
+    "style-loader": "^3.3.4",
+    "css-loader": "^6.8.1",
+    "@vscode/test-cli": "^0.0.11",
+    "@vscode/test-electron": "^2.5.2"
+  }
+}
