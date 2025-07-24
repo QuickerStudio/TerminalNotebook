@@ -1,10 +1,10 @@
 
 <div align="center">
-  <h1 style="font-size:3em;font-weight:bold;">TerminalNotebook</h1>
+  <img src="https://github.com/QuickerStudio/TerminalNotebook/blob/main/TerminalNotebook/icons-terminal.png" alt="TerminalNotebook Logo" />
 </div>
 
 <div align="center">
-  <img src="https://github.com/QuickerStudio/TerminalNotebook/blob/main/TerminalNotebook/icons-terminal.png" alt="TerminalNotebook Logo" />
+  <h1 style="font-size:3em;font-weight:bold;">TerminalNotebook</h1>
 </div>
 
 <div align="center">
