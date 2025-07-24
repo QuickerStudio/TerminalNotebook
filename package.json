@@ -68,6 +68,11 @@
         "icon": "$(cloud-download)"
       },
       {
+        "command": "terminalnotebook.toggleLock",
+        "title": "安全锁",
+        "icon": "$(lock)"
+      },
+      {
         "command": "terminalnotebook.addFavorite",
         "title": "Add to Favorites",
         "icon": "$(star-add)"
@@ -187,6 +192,19 @@
           "command": "terminalnotebook.importTabs",
           "when": "view == terminalnotebook.view",
           "group": "navigation@3"
+        }
+        ,
+        {
+          "command": "terminalnotebook.toggleLock",
+          "when": "view == terminalnotebook.view && terminalnotebook.locked",
+          "group": "navigation@4",
+          "icon": "$(lock)"
+        },
+        {
+          "command": "terminalnotebook.toggleLock",
+          "when": "view == terminalnotebook.view && !terminalnotebook.locked",
+          "group": "navigation@4",
+          "icon": "$(unlock)"
         }
       ]
     }
