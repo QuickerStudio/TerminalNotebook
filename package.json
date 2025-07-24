@@ -74,12 +74,12 @@
       },
       {
         "command": "terminalnotebook.lockCommand",
-        "title": "锁定",
+        "title": "已解锁，可以执行命令",
         "icon": "icons-lock-open.png"
       },
       {
         "command": "terminalnotebook.unlockCommand", 
-        "title": "解锁",
+        "title": "已锁定，禁止执行命令",
         "icon": "icons-lock.png"
       },
       {
