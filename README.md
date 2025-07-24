@@ -1,18 +1,37 @@
 
-
-
 <div align="center">
-# TerminalNotebook 🚀
+  <h1 style="font-size:3em;font-weight:bold;">TerminalNotebook</h1>
 </div>
-
-![TerminalNotebook Logo](https://github.com/QuickerStudio/TerminalNotebook/blob/main/TerminalNotebook/icons-terminal.png)
+<div align="center">
+  <span style="
+    display:inline-block;
+    font-size:1.3em;
+    font-weight:bold;
+    background: linear-gradient(90deg, #00ffe7, #ff00ea, #00ffe7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 6px #00ffe7, 0 0 12px #ff00ea;
+  ">Manage and quickly execute terminal commands to boost your development efficiency.</span>
+</div>
+<div align="center">
+  <img src="https://github.com/QuickerStudio/TerminalNotebook/blob/main/TerminalNotebook/icons-terminal.png" alt="TerminalNotebook Logo" />
+</div>
 
 ## 🖥️ Live Demo
 
 ![TerminalNotebook Live Demo](https://github.com/QuickerStudio/TerminalNotebook/blob/main/Main.png)
 
-> Use the TerminalNotebook VS Code extension to manage and execute terminal commands just like in Jupyter Notebook. Features include command grouping, mixed documentation, history records, and more.
-![TerminalNotebook Demo](https://github.com/QuickerStudio/TerminalNotebook/blob/main/Main.png)
+<p style="font-size:1.1em;line-height:1.7;">
+TerminalNotebook is a VS Code extension that lets you manage and execute terminal commands just like in Jupyter Notebook.<br>
+Key features include:
+<ul>
+  <li>Command grouping and organization</li>
+  <li>Mixed Markdown documentation and command cells</li>
+  <li>Command history and reuse</li>
+  <li>Multi-session/tab management</li>
+</ul>
+Boost your development efficiency with a notebook-style terminal experience!
+</p>
 
 **VS Code Terminal Command Notebook**  
 Manage and quickly execute terminal commands to boost your development efficiency.
@@ -132,9 +151,13 @@ Please read the Contribution Guide for details and standards.
 
 ### 📌 High Priority Contributions
 
+
 - Unit test coverage
 - CI/CD pipeline optimization
-- Documentation translation (EN/CH/JP)
+- Documentation temporary storage
+- TODO list support
+- Work notes
+- Terminal error log saving
 - Terminal output syntax highlighting support
 
 ---

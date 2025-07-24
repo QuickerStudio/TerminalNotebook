@@ -1,15 +1,52 @@
 
+<div align="center">
+  <h1 style="font-size:3em;font-weight:bold;">TerminalNotebook</h1>
+</div>
+<div align="center">
+  <span style="
+    display:inline-block;
+    font-size:1.3em;
+    font-weight:bold;
+    background: linear-gradient(90deg, #00ffe7, #ff00ea, #00ffe7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 6px #00ffe7, 0 0 12px #ff00ea;
+  ">Manage and quickly execute terminal commands to boost your development efficiency.</span>
+</div>
+<div align="center">
+  <img src="https://github.com/QuickerStudio/TerminalNotebook/blob/main/TerminalNotebook/icons-terminal.png" alt="TerminalNotebook Logo" />
+</div>
 
-# TerminalNotebook 🚀
+## 🖥️ Live Demo
 
-![TerminalNotebook Demo](https://github.com/QuickerStudio/TerminalNotebook/blob/main/Main.png)
+![TerminalNotebook Live Demo](https://github.com/QuickerStudio/TerminalNotebook/blob/main/Main.png)
+
+<p style="font-size:1.1em;line-height:1.7;">
+TerminalNotebook is a VS Code extension that lets you manage and execute terminal commands just like in Jupyter Notebook.<br>
+Key features include:
+<ul>
+  <li>Command grouping and organization</li>
+  <li>Mixed Markdown documentation and command cells</li>
+  <li>Command history and reuse</li>
+  <li>Multi-session/tab management</li>
+</ul>
+Boost your development efficiency with a notebook-style terminal experience!
+</p>
 
 **VS Code Terminal Command Notebook**  
 Manage and quickly execute terminal commands to boost your development efficiency.
 
-[![VS Code Version](https://img.shields.io/badge/VS%20Code-1.80%2B-blue?logo=visualstudiocode)](https://code.visualstudio.com/)  
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)  
-[![GitHub Stars](https://img.shields.io/github/stars/QuickerStudio/TerminalNotebook?style=social)](https://github.com/QuickerStudio/TerminalNotebook/stargazers)
+<p align="left">
+  <a href="https://code.visualstudio.com/">
+    <img src="https://img.shields.io/badge/VS%20Code-1.80%2B-blue?logo=visualstudiocode" alt="VS Code Version" />
+  </a>
+  <a href="https://opensource.org/licenses/MIT">
+    <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT" />
+  </a>
+  <a href="https://github.com/QuickerStudio/TerminalNotebook/stargazers">
+    <img src="https://img.shields.io/github/stars/QuickerStudio/TerminalNotebook?style=social" alt="GitHub Stars" />
+  </a>
+</p>
 
 > Manage terminal commands like Jupyter Notebook in VS Code, mixing commands, outputs, and documentation.
 
@@ -112,8 +149,8 @@ docker-compose up -d      # Start services in background
 We welcome contributions via Issues and PRs!
 Please read the Contribution Guide for details and standards.
 
-
 ### 📌 High Priority Contributions
+
 
 - Unit test coverage
 - CI/CD pipeline optimization
