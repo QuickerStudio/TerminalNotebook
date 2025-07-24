@@ -198,13 +198,13 @@
           "command": "terminalnotebook.toggleLock",
           "when": "view == terminalnotebook.view && terminalnotebook.locked",
           "group": "navigation@4",
-          "icon": "$(lock)"
+          "icon": "icons-lock.png"
         },
         {
           "command": "terminalnotebook.toggleLock",
           "when": "view == terminalnotebook.view && !terminalnotebook.locked",
           "group": "navigation@4",
-          "icon": "$(unlock)"
+          "icon": "icons-lock-open.png"
         }
       ]
     }

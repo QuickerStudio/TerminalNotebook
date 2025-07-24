@@ -18,18 +18,26 @@ export function activate(context: vscode.ExtensionContext) {
     context.globalState.update(LOCK_KEY, val);
     vscode.commands.executeCommand('setContext', 'terminalnotebook.locked', val);
   }
-  
+
   // 初始化安全锁状态并设置给TerminalManager
-  setLocked(isLocked());
+  const initialLockState = isLocked();
+  setLocked(initialLockState);
   TerminalManager.setLockChecker(isLocked);
 
   // 注册切换安全锁命令
-  context.subscriptions.push(vscode.commands.registerCommand('terminalnotebook.toggleLock', () => {
+  context.subscriptions.push(vscode.commands.registerCommand('terminalnotebook.toggleLock', async () => {
     const locked = isLocked();
-    setLocked(!locked);
+    const newState = !locked;
+
+    // 更新状态
+    await context.globalState.update(LOCK_KEY, newState);
+    await vscode.commands.executeCommand('setContext', 'terminalnotebook.locked', newState);
+
     // 更新TerminalManager的锁定检查器
     TerminalManager.setLockChecker(isLocked);
-    vscode.window.showInformationMessage(!locked ? '已锁定，禁止执行命令' : '已解锁，可以执行命令');
+
+    // 显示状态消息
+    vscode.window.showInformationMessage(newState ? '已锁定，禁止执行命令' : '已解锁，可以执行命令');
   }));
 
   const treeView = vscode.window.createTreeView('terminalnotebook.view', {
@@ -98,4 +106,4 @@ export function activate(context: vscode.ExtensionContext) {
   }));
 }
 
-export function deactivate() {}
+export function deactivate() { }
