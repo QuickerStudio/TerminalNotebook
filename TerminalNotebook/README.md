@@ -112,11 +112,15 @@ docker-compose up -d      # Start services in background
 We welcome contributions via Issues and PRs!
 Please read the Contribution Guide for details and standards.
 
+
 ### 📌 High Priority Contributions
 
 - Unit test coverage
 - CI/CD pipeline optimization
-- Documentation translation (EN/CH/JP)
+- Documentation temporary storage
+- TODO list support
+- Work notes
+- Terminal error log saving
 - Terminal output syntax highlighting support
 
 ---

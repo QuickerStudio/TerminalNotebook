@@ -1,10 +1,17 @@
 
 
 
+<div align="center">
 # TerminalNotebook 🚀
+</div>
 
-# TerminalNotebook 🚀
 ![TerminalNotebook Logo](https://github.com/QuickerStudio/TerminalNotebook/blob/main/TerminalNotebook/icons-terminal.png)
+
+## 🖥️ Live Demo
+
+![TerminalNotebook Live Demo](https://github.com/QuickerStudio/TerminalNotebook/blob/main/Main.png)
+
+> Use the TerminalNotebook VS Code extension to manage and execute terminal commands just like in Jupyter Notebook. Features include command grouping, mixed documentation, history records, and more.
 ![TerminalNotebook Demo](https://github.com/QuickerStudio/TerminalNotebook/blob/main/Main.png)
 
 **VS Code Terminal Command Notebook**  
