@@ -1,7 +1,7 @@
 
 
 <div align="center">
-  <img src="https://github.com/QuickerStudio/TerminalNotebook/blob/main/TerminalNotebook/icons-terminal.png" alt="TerminalNotebook Logo" />
+  <img src="https://github.com/QuickerStudio/TerminalNotebook/blob/main/icons-terminal.png" alt="TerminalNotebook Logo" />
 </div>
 
 <div align="center">
