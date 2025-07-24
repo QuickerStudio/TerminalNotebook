@@ -66,7 +66,7 @@ export class TreeData implements vscode.TreeDataProvider<vscode.TreeItem> {
         item.id = tab.id;
         item.contextValue = 'editableTab deletableTab copyableTab';
         item.description = '';
-        item.tooltip = 'Click to execute command immediately';
+        item.tooltip = tab.label;
         item.iconPath = this.context.asAbsolutePath('icons-terminal.png');
         item.command = {
           command: 'terminalnotebook.openTerminal',
